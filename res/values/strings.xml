@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">aqbook</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="tab_1">&#xe601;</string>
+    <string name="tab_2">&#xe602;</string>
+    <string name="tab_3">&#xe600;</string>
+    <string name="tab_4">&#xe603;</string>
+    <string name="title_activity_load_list_view">LoadListView</string>
+
+</resources>
