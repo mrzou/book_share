@@ -6,6 +6,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FourFragment" />
+        android:text="FourFragment" 
+        android:drawableBottom="@drawable/blue"  
+        android:drawableLeft="@drawable/green"  
+        android:drawableRight="@drawable/purple"  
+        android:drawableTop="@drawable/black" />
 
 </RelativeLayout>

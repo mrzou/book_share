@@ -2,7 +2,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="tab_title_normal_color">#262726</color>
+    <color name="tab_title_normal_color">#C0C0C0</color>
     <color name="tab_title_pressed_color">#16982b</color>
     <color name="tab_middle_line_color">#5c882c</color>
 

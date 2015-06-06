@@ -1,11 +1,114 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <TextView
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="threeFragment" />
-
-</RelativeLayout>
+        android:text="消息"
+        android:gravity="center"
+        android:textSize="30sp"/>
+    <LinearLayout 
+	    android:id="@+id/message_linearlayout1"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+	    android:orientation="horizontal">	
+        <TextView 
+	        android:id="@+id/message_l1_image"
+	        android:layout_width="46dp"
+	        android:layout_height="47dp"
+	        android:gravity="center"
+	        android:layout_marginLeft="16dp"
+	        android:text="@string/inform"
+	        android:textColor="#FFFFFF"
+	        android:textSize="20sp"
+	        android:background="@drawable/black"/>
+	    <TextView 
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="left"
+	        android:layout_marginLeft="18dp"
+	        android:text="通知"/>
+	    <TextView 
+	        android:id="@+id/forward_id1"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:gravity="right"
+	        android:layout_weight="1"
+	        android:layout_marginRight="8dp"
+	        android:textColor="#400000"
+	        android:text="@string/forward"
+	        android:textSize="20dp"/>
+	</LinearLayout>
+	<LinearLayout 
+	    android:id="@+id/message_linearlayout2"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+	    android:orientation="horizontal">
+	    <TextView 
+	        android:id="@+id/message_l2_image"
+	        android:layout_width="46dp"
+	        android:layout_height="47dp"	
+	        android:layout_marginLeft="16dp"
+	        android:gravity="center"
+	        android:textSize="22sp"
+	      	android:textColor="#FFFFFF"
+	        android:text="@string/comment"
+	        android:background="@drawable/green"/>
+	    <TextView 
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="left"
+	        android:layout_marginLeft="18dp"
+	        android:text="评论"/>
+	    <TextView 
+	        android:id="@+id/forward_id2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="right"
+	        android:layout_weight="1"
+	        android:layout_marginRight="8dp"
+	        android:text="@string/forward"
+	        android:textColor="#400000"
+	        android:textSize="20dp"/>
+	</LinearLayout>
+	<LinearLayout 
+	    android:id="@+id/message_linearlayout3"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+	    android:orientation="horizontal">	
+        <TextView 
+	        android:id="@+id/message_l3_image"
+	        android:layout_width="46dp"
+	        android:layout_height="47dp"
+	        android:layout_marginLeft="16dp"
+	        android:gravity="center"
+	        android:textColor="#FFFFFF"
+	        android:textSize="21sp"
+	        android:text="@string/help_icon"
+	        android:background="@drawable/purple"/>
+	    <TextView 
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_marginLeft="18dp"
+	        android:gravity="left"
+	        android:text="小助手"/>
+	    <TextView 
+	        android:id="@+id/forward_id3"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:gravity="right"
+	        android:layout_weight="1"
+	        android:layout_marginRight="8dp"
+	        android:text="@string/forward"
+	        android:textSize="20dp"/>
+	</LinearLayout>
+	
+</LinearLayout>

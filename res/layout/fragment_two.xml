@@ -3,10 +3,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <TextView
-        android:layout_width="wrap_content"
+    <TextView 
+        android:id="@+id/add_book_title"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="twoFragment" />
-
+        android:text="@string/add_book_enjoy"
+        android:gravity="center"
+        android:textSize="30sp"/>
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_book_string1"
+        android:gravity="left"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"/>
+    <LinearLayout 
+	    android:id="@+id/add_book_linearlayout1"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+	    android:orientation="horizontal">	
+        <TextView 
+	        android:id="@+id/add_book_book"
+	        android:layout_width="46dp"
+	        android:layout_height="47dp"
+	        android:gravity="center"
+	        android:layout_marginLeft="16dp"
+	        android:text="@string/little_book"
+	        android:textColor="#000000"
+	        android:textSize="30sp"/>
+	    <TextView 
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="left"
+	        android:layout_marginLeft="18dp"
+	        android:text="@string/add_book_to"/>
+	    <TextView 
+	        android:id="@+id/add_book_if_enjoy"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:gravity="right"
+	        android:layout_weight="1"
+	        android:layout_marginRight="8dp"
+	        android:textColor="#400000"
+	        android:text="@string/if_enjoy"
+	        android:textSize="20sp"/>
+	</LinearLayout>
+	<TextView 
+	    android:id="@+id/add_book_icon"
+	    android:layout_width="100dp"
+	    android:layout_height="150dp"
+	    android:text="@string/add_book"
+	    android:gravity="center"
+	    android:background="#C0C0C0"
+	    android:layout_marginLeft="30dp"
+	    android:layout_marginTop="50dp"
+	    android:textSize="70sp"
+	    />
 </LinearLayout>
