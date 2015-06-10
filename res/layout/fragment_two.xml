@@ -1,65 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/all_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <TextView 
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
         android:id="@+id/add_book_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_book_enjoy"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textSize="30sp"/>
-    <TextView 
+        android:text="@string/add_book_enjoy"
+        android:textSize="20sp" />
+
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_book_string1"
-        android:gravity="left"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp"
-        android:textSize="15sp"/>
-    <LinearLayout 
-	    android:id="@+id/add_book_linearlayout1"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="20dp"
-	    android:orientation="horizontal">	
-        <TextView 
-	        android:id="@+id/add_book_book"
-	        android:layout_width="46dp"
-	        android:layout_height="47dp"
-	        android:gravity="center"
-	        android:layout_marginLeft="16dp"
-	        android:text="@string/little_book"
-	        android:textColor="#000000"
-	        android:textSize="30sp"/>
-	    <TextView 
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:gravity="left"
-	        android:layout_marginLeft="18dp"
-	        android:text="@string/add_book_to"/>
-	    <TextView 
-	        android:id="@+id/add_book_if_enjoy"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:gravity="right"
-	        android:layout_weight="1"
-	        android:layout_marginRight="8dp"
-	        android:textColor="#400000"
-	        android:text="@string/if_enjoy"
-	        android:textSize="20sp"/>
-	</LinearLayout>
-	<TextView 
-	    android:id="@+id/add_book_icon"
-	    android:layout_width="100dp"
-	    android:layout_height="150dp"
-	    android:text="@string/add_book"
-	    android:gravity="center"
-	    android:background="#C0C0C0"
-	    android:layout_marginLeft="30dp"
-	    android:layout_marginTop="50dp"
-	    android:textSize="70sp"
-	    />
+        android:gravity="left"
+        android:text="@string/add_book_string1"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:id="@+id/add_book_linearlayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/add_book_book"
+            android:layout_width="46dp"
+            android:layout_height="47dp"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="@string/little_book"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="@string/add_book_to" />
+
+        <TextView
+            android:id="@+id/add_book_if_enjoy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/if_enjoy"
+            android:textColor="#400000"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scan_book_id"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/add_book_icon"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:background="#C0C0C0"
+            android:gravity="center"
+            android:text="@string/scan_book"
+            android:textSize="70sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/enjoyText"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"
+        android:hint="@string/fragment_two_hint" />
+    
+    <Button
+        android:id="@+id/comeOutBook"
+        android:layout_width="194dp"
+        android:layout_height="41dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="发布" 
+        android:descendantFocusability="blocksDescendants"
+        android:visibility="invisible"/>"
+
 </LinearLayout>

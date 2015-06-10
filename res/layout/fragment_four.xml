@@ -1,15 +1,104 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <TextView
-        android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="fill_parent"  
+    android:layout_height="fill_parent"  
+    android:background="@color/white"  
+    android:orientation="vertical" >  
+  
+    <TextView 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FourFragment" 
-        android:drawableBottom="@drawable/blue"  
-        android:drawableLeft="@drawable/green"  
-        android:drawableRight="@drawable/purple"  
-        android:drawableTop="@drawable/black" />
-
-</RelativeLayout>
+        android:gravity="center"
+        android:text="登陆"
+        android:textSize="30sp"/>
+    <LinearLayout  
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+  
+        <TextView  
+            android:id="@+id/acount_name"  
+            android:layout_width="50dp"  
+            android:layout_height="35dip"  
+            android:gravity="left"  
+            android:textColor="#000000"  
+            android:text="帐号:"  
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp" />  
+  
+        <EditText  
+            android:id="@+id/acount_edit"  
+            android:layout_width="match_parent"  
+            android:layout_height="40dip"  
+            android:layout_marginLeft="10dip"  
+            android:layout_marginRight="10dip" />  
+	</LinearLayout>
+	
+    <LinearLayout  
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+  
+        <TextView  
+            android:id="@+id/password_name"  
+            android:layout_width="50dp"  
+            android:layout_height="35dip"  
+            android:gravity="left"  
+            android:textColor="#000000"  
+            android:text="密码:"  
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp" />  
+  
+        <EditText  
+            android:id="@+id/password_edit"  
+            android:layout_width="match_parent"  
+            android:inputType="textPassword"
+            android:layout_height="40dip"  
+            android:layout_marginLeft="10dip"  
+            android:layout_marginRight="10dip" />  
+	</LinearLayout>
+  
+	<!-- <LinearLayout 
+    	android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <CheckBox  
+            android:id="@+id/cb_mima"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:layout_marginLeft="12dip"  
+            android:text="记住密码"  
+            android:textColor="#000000" />  
+  
+        <CheckBox  
+            android:id="@+id/cb_auto"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:layout_marginLeft="12dip"  
+            android:text="自动登录"  
+            android:textColor="#000000" />   -->
+        <Button  
+            android:id="@+id/btn_login"  
+            android:layout_width="match_parent"  
+            android:layout_height="40dip"  
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dip"  
+            android:layout_marginRight="10dip"  
+            android:gravity="center"  
+            android:text="登 录"  
+            android:textColor="#000000"  
+            android:textSize="18sp"/>  
+  
+        <TextView 
+            android:id="@+id/logUpUser"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:text="注册"
+            android:clickable="true"
+            android:textColor="#400000"
+            android:textSize="20dp"/>
+    <!-- </LinearLayout> -->
+      
+</LinearLayout>

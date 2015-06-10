@@ -8,23 +8,17 @@ import com.aqbook.activity.fragment.OneFragment;
 import com.aqbook.activity.fragment.ThreeFragment;
 import com.aqbook.activity.fragment.TwoFragmnet;
 import com.aqbook.R;
+import com.aqbook.activity.adapter.CustomeFragmentPagerAdapter;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 //import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,18 +26,9 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity {
 
 	private ViewPager viewPager;// 页卡内容
-//	private ImageView imageView;// 动画图片
-	private TextView book_case, out_book, comment_message, self_message;// 选项名称
-	private TextView book_casep, out_bookp, comment_messagep, self_messagep;// 选项名称
 	private List<Fragment> fragments;// Tab页面列表
-	private int offset = 0;// 动画图片偏移量
-	private int currIndex = 0;// 当前页卡编号
-	private int bmpW;// 动画图片宽度
-	private int screenH;// 屏幕高度度
 	private int selectedColor, unSelectedColor;
-	/** 页卡总数 **/
-	private static final int pageSize = 4;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +44,6 @@ public class MainActivity extends FragmentActivity {
 		unSelectedColor = getResources().getColor(
 				R.color.tab_title_normal_color);
 
-//		InitImageView();
 		InitTextView();
 		InitViewPager();
 	}
@@ -74,8 +58,7 @@ public class MainActivity extends FragmentActivity {
 		fragments.add(new TwoFragmnet());
 		fragments.add(new ThreeFragment());
 		fragments.add(new FourFragment());
-		viewPager.setAdapter(new myPagerAdapter(getSupportFragmentManager(),
-				fragments));
+		viewPager.setAdapter(new CustomeFragmentPagerAdapter(getSupportFragmentManager(), fragments));
 		viewPager.setCurrentItem(0);                   //初始化page的fragment
 		viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
@@ -85,49 +68,35 @@ public class MainActivity extends FragmentActivity {
 	 * 
 	 */
 	private void InitTextView() {
-		Typeface iconfont = Typeface.createFromAsset(getAssets(), "iconfont.ttf");
 		
-		LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout1);
-		LinearLayout linearLayout2 = (LinearLayout) findViewById(R.id.linearLayout2);
-		LinearLayout linearLayout3 = (LinearLayout) findViewById(R.id.linearLayout3);
-		LinearLayout linearLayout4 = (LinearLayout) findViewById(R.id.linearLayout4);
-		book_case = (TextView) findViewById(R.id.tab_1);
-		book_casep = (TextView) findViewById(R.id.tab_1p);
-		book_casep.setTypeface(iconfont);
-		out_book = (TextView) findViewById(R.id.tab_2);
-		out_bookp = (TextView) findViewById(R.id.tab_2p);
-		out_bookp.setTypeface(iconfont);
-		comment_message = (TextView) findViewById(R.id.tab_3);
-		comment_messagep = (TextView) findViewById(R.id.tab_3p);
-		comment_messagep.setTypeface(iconfont);
-		self_message = (TextView) findViewById(R.id.tab_4);
-		self_messagep = (TextView) findViewById(R.id.tab_4p);
-		self_messagep.setTypeface(iconfont);
-
-		book_case.setTextColor(selectedColor);
-		out_book.setTextColor(unSelectedColor);
-		comment_message.setTextColor(unSelectedColor);
-		self_message.setTextColor(unSelectedColor);
-		book_casep.setTextColor(selectedColor);
-		out_bookp.setTextColor(unSelectedColor);
-		comment_messagep.setTextColor(unSelectedColor);
-		self_messagep.setTextColor(unSelectedColor);
-
-		book_case.setText("书架");
-		out_book.setText("发书");
-		comment_message.setText("消息");
-		self_message.setText("我");
-        
-		linearLayout1.setOnClickListener(new MyOnClickListener(0));
-		linearLayout2.setOnClickListener(new MyOnClickListener(1));
-		linearLayout3.setOnClickListener(new MyOnClickListener(2));
-		linearLayout4.setOnClickListener(new MyOnClickListener(3));
+		makeMenuOfBottom(R.id.linearLayout1, "书架", 0);
+		makeMenuOfBottom(R.id.linearLayout2, "发书", 1);
+		makeMenuOfBottom(R.id.linearLayout3, "消息", 2);
+		makeMenuOfBottom(R.id.linearLayout4, "我", 3);
 	}
 
+	private void makeMenuOfBottom(int linearLayoutId, String text, int index){
+		Typeface iconfont = Typeface.createFromAsset(getAssets(), "iconfont.ttf");
+		LinearLayout linearLayout = (LinearLayout) findViewById(linearLayoutId);
+		
+		linearLayout.setOnClickListener(new MyOnClickListener(index));
+//		设置主页底下菜单的图片和文字
+		((TextView) linearLayout.getChildAt(0)).setTypeface(iconfont);
+		((TextView) linearLayout.getChildAt(1)).setText(text);
+//		设置初始颜色
+		if(index==0){
+			((TextView) linearLayout.getChildAt(0)).setTextColor(selectedColor);
+			((TextView) linearLayout.getChildAt(1)).setTextColor(selectedColor);
+		}else{
+			((TextView) linearLayout.getChildAt(0)).setTextColor(unSelectedColor);
+			((TextView) linearLayout.getChildAt(1)).setTextColor(unSelectedColor);
+		}
+	}
 	/**
 	 * 头标点击监听
 	 */
 	private class MyOnClickListener implements OnClickListener {
+		
 		private int index = 0;
 
 		public MyOnClickListener(int i) {
@@ -135,51 +104,7 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		public void onClick(View v) {
-
-			switch (index) {
-			case 0:
-				book_case.setTextColor(selectedColor);
-				out_book.setTextColor(unSelectedColor);
-				comment_message.setTextColor(unSelectedColor);
-				self_message.setTextColor(unSelectedColor);
-				book_casep.setTextColor(selectedColor);
-				out_bookp.setTextColor(unSelectedColor);
-				comment_messagep.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(unSelectedColor);
-				break;
-			case 1:
-				out_book.setTextColor(selectedColor);
-				book_case.setTextColor(unSelectedColor);
-				comment_message.setTextColor(unSelectedColor);
-				self_message.setTextColor(unSelectedColor);
-				out_bookp.setTextColor(selectedColor);
-				book_casep.setTextColor(unSelectedColor);
-				comment_messagep.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(unSelectedColor);
-				break;
-			case 2:
-				comment_message.setTextColor(selectedColor);
-				book_case.setTextColor(unSelectedColor);
-				out_book.setTextColor(unSelectedColor);
-				self_message.setTextColor(unSelectedColor);
-				comment_messagep.setTextColor(selectedColor);
-				book_casep.setTextColor(unSelectedColor);
-				out_bookp.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(unSelectedColor);
-				break;
-			case 3:
-				comment_message.setTextColor(unSelectedColor);
-				book_case.setTextColor(unSelectedColor);
-				out_book.setTextColor(unSelectedColor);
-				self_message.setTextColor(selectedColor);
-				comment_messagep.setTextColor(unSelectedColor);
-				book_casep.setTextColor(unSelectedColor);
-				out_bookp.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(selectedColor);
-				break;
-			}
-			
-			viewPager.setCurrentItem(index);
+			viewPager.setCurrentItem(index, true);
 		}
 
 	}
@@ -189,9 +114,6 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public class MyOnPageChangeListener implements OnPageChangeListener {
 
-		int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
-		int two = one * 2;// 页卡1 -> 页卡3 偏移量
-
 		public void onPageScrollStateChanged(int index) {
 		}
 
@@ -199,94 +121,26 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		public void onPageSelected(int index) {
-			Animation animation = new TranslateAnimation(one * currIndex, one
-					* index, screenH, screenH);// 显然这个比较简洁，只有一行代码。
-			currIndex = index;
-			animation.setFillAfter(true);// True:图片停在动画结束位置
-			animation.setDuration(300);
-//			imageView.startAnimation(animation);
-
-			switch (index) {
-			case 0:
-				book_case.setTextColor(selectedColor);
-				out_book.setTextColor(unSelectedColor);
-				comment_message.setTextColor(unSelectedColor);
-				self_message.setTextColor(unSelectedColor);
-				book_casep.setTextColor(selectedColor);
-				out_bookp.setTextColor(unSelectedColor);
-				comment_messagep.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(unSelectedColor);
-				break;
-			case 1:
-				out_book.setTextColor(selectedColor);
-				book_case.setTextColor(unSelectedColor);
-				comment_message.setTextColor(unSelectedColor);
-				self_message.setTextColor(unSelectedColor);
-				out_bookp.setTextColor(selectedColor);
-				book_casep.setTextColor(unSelectedColor);
-				comment_messagep.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(unSelectedColor);
-				break;
-			case 2:
-				comment_message.setTextColor(selectedColor);
-				book_case.setTextColor(unSelectedColor);
-				out_book.setTextColor(unSelectedColor);
-				self_message.setTextColor(unSelectedColor);
-				comment_messagep.setTextColor(selectedColor);
-				book_casep.setTextColor(unSelectedColor);
-				out_bookp.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(unSelectedColor);
-				break;
-			case 3:
-				comment_message.setTextColor(unSelectedColor);
-				book_case.setTextColor(unSelectedColor);
-				out_book.setTextColor(unSelectedColor);
-				self_message.setTextColor(selectedColor);
-				comment_messagep.setTextColor(unSelectedColor);
-				book_casep.setTextColor(unSelectedColor);
-				out_bookp.setTextColor(unSelectedColor);
-				self_messagep.setTextColor(selectedColor);
-				break;
+			int i;
+			LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+//			设置菜单的颜色的变化
+			for(i=0; i<4; i++){
+				if(i<index || i>index){
+					TextView textView1 = (TextView) ((LinearLayout) linearLayout.getChildAt(i)).getChildAt(0);
+					TextView textView2 = (TextView) ((LinearLayout) linearLayout.getChildAt(i)).getChildAt(1);
+					textView1.setTextColor(unSelectedColor);
+					textView2.setTextColor(unSelectedColor);
+				}else{
+					TextView textView1 = (TextView) ((LinearLayout) linearLayout.getChildAt(index)).getChildAt(0);
+					TextView textView2 = (TextView) ((LinearLayout) linearLayout.getChildAt(index)).getChildAt(1);
+					textView1.setTextColor(selectedColor);
+					textView2.setTextColor(selectedColor);
+				}
 			}
-			viewPager.setCurrentItem(index);
+			viewPager.setCurrentItem(index, false);
 		}
 	}
 
-	/**
-	 * 定义适配器
-	 */
-	class myPagerAdapter extends FragmentPagerAdapter {
-		
-		private List<Fragment> fragmentList;
-		public myPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
-			super(fm);
-			this.fragmentList = fragmentList;
-		}
-
-		/**
-		 * 得到每个页面
-		 */
-		@Override
-		public Fragment getItem(int arg0) {
-			return (fragmentList == null || fragmentList.size() == 0) ? null
-					: fragmentList.get(arg0);
-		}
-
-		/**
-		 * 每个页面的title
-		 */
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return null;
-		}
-
-		/**
-		 * 页面的总个数
-		 */
-		@Override
-		public int getCount() {
-			return fragmentList == null ? 0 : fragmentList.size();
-		}
-	}
+	
 
 }

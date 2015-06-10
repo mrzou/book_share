@@ -8,6 +8,7 @@ import com.aqbook.activity.entity.ListViewItem;
 import com.aqbook.activity.view.LoadListView;
 import com.aqbook.activity.view.LoadListView.ILoadListener;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class OneFragment extends Fragment implements ILoadListener{
 	
@@ -23,10 +25,9 @@ public class OneFragment extends Fragment implements ILoadListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.v("TAG", "OneFragment.java");
 		this.view = inflater.inflate(R.layout.fargment_one, null);
-		getData();
 		showListView(apk_list, true);
+		
 		return this.view;
 	}
 	@Override
@@ -40,6 +41,7 @@ public class OneFragment extends Fragment implements ILoadListener{
 	
 	private void showListView(ArrayList<ListViewItem> apk_list, boolean loadData) {
 		if (loadData) {
+			apk_list = apk_list.isEmpty() ? getData():apk_list;             //切换fragment时会重复加载该类，但是apk_list的值不变
 			listview = (LoadListView) view.findViewById(R.id.fragment1_listview);
 			listview.setInterface(this);
 			adapter = new ListViewAdapter(getActivity(), apk_list);
@@ -49,7 +51,7 @@ public class OneFragment extends Fragment implements ILoadListener{
 		}
 	}
 
-	private void getData() {
+	private ArrayList<ListViewItem> getData() {
 		for (int i = 0; i < 10; i++) {
 			ListViewItem entity = new ListViewItem();
 			entity.setName("hello");
@@ -57,6 +59,7 @@ public class OneFragment extends Fragment implements ILoadListener{
 			entity.setDes("descript");
 			apk_list.add(entity);
 		}
+		return apk_list;
 	}
 	private void getLoadData() {
 		for (int i = 0; i < 2; i++) {
