@@ -21,18 +21,20 @@
     <string name="scan_book">&#xe60a;</string>
     <string name="line">&#xe655;</string>
     <string name="logup">&#xe604;</string>
-    
+    <string name="sign_out">&#xe6b1;</string>
     <string name="if_enjoy">是否分享</string>
     <string name="add_book_to">添加图书</string>
     <string name="add_book_string1">仅次于选择益友，就是选择好书</string>
     <string name="add_book_enjoy">发书</string>
     <string name="scan_add_book">注册</string>
     <string name="main_activity_title">分享图书</string>
-    <string name="passwor_allert">密码要大于6</string>
+    <string name="passwor_allert">密码在6到12个字符</string>
+    <string name="personal_message">个人信息</string>
 
     <!-- 扫描用的string -->
     <string name="menu_settings">Settings</string>
     <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
     <string name="title_activity_user_to_log_up">UserToLogUp</string>
+    <string name="title_activity_loading">LoadingActivity</string>
 
 </resources>

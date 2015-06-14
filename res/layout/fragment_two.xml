@@ -5,13 +5,9 @@
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
+        style="@style/TitleStyle"
         android:id="@+id/add_book_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="@string/add_book_enjoy"
-        android:textSize="20sp" />
+        android:text="@string/add_book_enjoy" />
 
     <TextView
         android:layout_width="fill_parent"
