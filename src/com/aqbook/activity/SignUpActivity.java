@@ -23,10 +23,14 @@ import com.aqbook.activity.entity.CustomProgress;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -80,6 +84,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 		
 		setPhoneLostFocus();
 		validatePassword();
+		listenNetwork();
 	}
 	//验证密码长度及是否一致
 	public void validatePassword(){
@@ -393,5 +398,28 @@ public class SignUpActivity<signUpButton> extends Activity {
         linearLayout.requestFocus();
 	    imm.hideSoftInputFromWindow(phonEditText.getWindowToken(), 0); 
         return super.onTouchEvent(event);
+    }
+    //注册监听广播
+    public void listenNetwork(){
+    	IntentFilter intentFilter = new IntentFilter();
+    	intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANG");
+    	NetworkChangeReceiver networkReceiver = new NetworkChangeReceiver();
+    	registerReceiver(networkReceiver, intentFilter);
+    }
+    //监听广播
+    public class NetworkChangeReceiver extends BroadcastReceiver {
+
+    	@Override
+    	public void onReceive(Context arg0, Intent arg1) {
+    		// TODO Auto-generated method stub
+
+    		ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    		NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+    		if (networkInfo != null && networkInfo.isAvailable()){
+    			Toast.makeText(SignUpActivity.this, "network is avalable", 1).show();
+    		}else{
+    			Toast.makeText(SignUpActivity.this, "network is unavailiable", 1).show();
+    		}
+    	}
     }
 }
