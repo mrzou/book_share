@@ -26,7 +26,7 @@
   
         <EditText  
             style="@style/InputStyle"
-            android:id="@+id/acount_edit"  
+            android:id="@+id/log_in_acount_edit"  
             android:inputType="phone"/>  
 	</LinearLayout>
 	
@@ -48,7 +48,7 @@
   
         <EditText  
             style="@style/InputStyle"
-            android:id="@+id/password_edit"  
+            android:id="@+id/log_in_password_edit"  
             android:inputType="textPassword"/>  
 	</LinearLayout>
   

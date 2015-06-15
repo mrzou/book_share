@@ -15,15 +15,17 @@ import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.aqbook.R;
-import com.aqbook.activity.LoadingActivity;
 import com.aqbook.activity.MainActivity;
 import com.aqbook.activity.SignUpActivity;
+import com.aqbook.activity.entity.CustomProgress;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,10 +43,18 @@ public class FourFragment extends Fragment implements OnClickListener{
 	Button signOutView;
 	TextView signUpButton;
 	Button signInButton;
+	private boolean if_success = false;
 	private RequestQueue signInQueue;
+	
+	LayoutInflater inflatera;
+	ViewGroup containera;
+	Bundle savedInstanceStatea;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		inflatera = inflater;
+		containera = container;
+		savedInstanceStatea = savedInstanceState;
 		
 		signInQueue = Volley.newRequestQueue(getActivity());
 		testIfToken(inflater);
@@ -66,8 +76,8 @@ public class FourFragment extends Fragment implements OnClickListener{
 	}
 	//手机　密码检测
 	public void userLogin(){
-		String userPhone = ((EditText) view.findViewById(R.id.acount_edit)).getText().toString();
-		String userPassword = ((EditText) view.findViewById(R.id.password_edit)).getText().toString();
+		String userPhone = ((EditText) view.findViewById(R.id.log_in_acount_edit)).getText().toString();
+		String userPassword = ((EditText) view.findViewById(R.id.log_in_password_edit)).getText().toString();
 		int passwordLength = userPassword.length();
 		if(userPhone.length() != 11){
 			Toast.makeText(getActivity(), "电话号码不正确", 1).show();
@@ -85,7 +95,8 @@ public class FourFragment extends Fragment implements OnClickListener{
 		JSONObject jsonObject = new JSONObject(map); 
 		Map<String, Object> allMap = new HashMap<String, Object>();    
 		allMap.put("user", jsonObject);
-		JSONObject jsonObjectAll = new JSONObject(allMap); 
+		JSONObject jsonObjectAll = new JSONObject(allMap);
+		makeDialog();
 		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/users/sign_in", jsonObjectAll,  
 			new Response.Listener<JSONObject>() {  
 				@Override  
@@ -96,29 +107,43 @@ public class FourFragment extends Fragment implements OnClickListener{
 							editor.putString("token", response.get("token").toString());
 							editor.putString("user_id", response.get("user_id").toString());
 							editor.commit();
-							
-							Intent intent = new Intent();  
-					        intent.setClass(getActivity(),LoadingActivity.class);//跳转到加载界面  
-					        startActivity(intent); 
+							if_success = true;
 						}else{
 							
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						Toast.makeText(getActivity(), "登陆错误!", 1).show();
+						if_success = false;
 					}  
 				}  
 			}, new Response.ErrorListener() {  
 				@Override  
 				public void onErrorResponse(VolleyError error) {  
-					Toast.makeText(getActivity(), "密码错误!", 1).show();
+					if_success = false;
 				}  
 		});
 		int socketTimeout = 30000;//30 seconds - change to what you want
 		RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 		jsonObjectRequest.setRetryPolicy(policy);
 		signInQueue.add(jsonObjectRequest);
+	}
+	public void makeDialog(){
+		final CustomProgress dialog = CustomProgress.show(getActivity(), "登录中...", true, null); 
+		new Handler().postDelayed(new Runnable(){  
+	        public void run(){    
+	            //等待10000毫秒后销毁此页面，并提示登陆成功  
+	            dialog.cancel();  
+	            if(if_success){
+	            	Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();  
+	            	
+	            	Intent intent = new Intent(getActivity(), MainActivity.class);
+	            	startActivity(intent);
+	            }else{
+	            	Toast.makeText(getActivity(), "登陆失败!", 1).show();
+	            }
+	        }  
+	    }, 2500); 
 	}
 	//根据是否有token决定是否显示用户信息
 	public void testIfToken(LayoutInflater inflater){
@@ -156,20 +181,45 @@ public class FourFragment extends Fragment implements OnClickListener{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				confirmToLogOut();
+			}
+		});
+	}
+	public void confirmToLogOut(){
+		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+		dialog.setTitle("提示!");
+		dialog.setMessage("确定退出?");
+		dialog.setCancelable(false);
+		dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				// TODO Auto-generated method stub
 				SharedPreferences.Editor editor = getActivity().getSharedPreferences("token", 0).edit();
 				editor.putString("token", "");
 				editor.putString("user_id", "");
 				editor.commit();
 				Toast.makeText(getActivity(), "用户退出成功", 1).show();
-				/*MainActivity mainActivity = (MainActivity) getActivity();
-				mainActivity.setContentView(R.layout.fragment_four);*/
+				
+				Intent intent = new Intent(getActivity(), MainActivity.class);
+				intent.putExtra("page", "3");
+				startActivity(intent);
 			}
 		});
+		dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		dialog.show();
 	}
 	@Override
 	public void onDetach(){
 		super.onDetach();
 		Log.v("TAG", "onDetach");
 	}
-	
 }

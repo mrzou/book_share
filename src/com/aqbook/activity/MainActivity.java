@@ -10,6 +10,7 @@ import com.aqbook.activity.fragment.TwoFragmnet;
 import com.aqbook.R;
 import com.aqbook.activity.adapter.CustomeFragmentPagerAdapter;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -140,7 +141,10 @@ public class MainActivity extends FragmentActivity {
 			viewPager.setCurrentItem(index, false);
 		}
 	}
-
-	
+	@Override  
+	protected void onResume() {  
+	    super.onResume();
+	    viewPager.setCurrentItem(0, false);
+	}  
 
 }

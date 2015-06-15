@@ -13,5 +13,6 @@
     <color name="possible_result_points">#c0ffff00</color> 
     <color name="gray">#CCCCCC</color>
     <color name="lighter_gray">#C0C0C0</color>
+    <color name="title_color">#669933</color>
 
 </resources>

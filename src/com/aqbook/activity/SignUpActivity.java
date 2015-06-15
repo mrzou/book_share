@@ -19,9 +19,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aqbook.R;
+import com.aqbook.activity.entity.CustomProgress;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -43,6 +46,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 	
 	private RequestQueue signUpQueue;
 	private ProgressDialog mProgressDialog;
+	private boolean if_success = false;
 	
 	EditText phonEditText;
 	EditText passwordEditText;
@@ -120,7 +124,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 		        if(hasFocus){//获得焦点  
 		            //在这里可以对获得焦点进行处理  
 		        }else if(phonEditText.getText().toString().length()==11){//失去焦点
-		        	validatePhoneNumber(true);
+					validatePhoneNumber(true);
 		        }else{
 		        	button.setEnabled(false);
 		        	Toast.makeText(SignUpActivity.this, "手机号长度不符合", 1).show();
@@ -131,7 +135,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 	}
 	//到后台去验证手机号码是否重复
 	public void validatePhoneNumber(final boolean state){
-		
+		Log.v("TAG", "validatePhoneNumber");
 		button.setEnabled(true);
     	Map<String, Object> phoneNumber = new HashMap<String, Object>();    
 		phoneNumber.put("phone_number", phonEditText.getText().toString());    
@@ -156,15 +160,16 @@ public class SignUpActivity<signUpButton> extends Activity {
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Log.v("TAG", "Jsonexceition");
 					}
 	            }  
 	        }, new Response.ErrorListener() {  
 	            @Override  
 	            public void onErrorResponse(VolleyError error) {  
-	                Log.v("TAG", error.getMessage(), error);  
+	                Log.v("TAG", error.getMessage(), error);
 	            }  
 	        });  
-		int socketTimeout = 30000;//30 seconds - change to what you want
+		int socketTimeout = 50000;//30 seconds - change to what you want
 		RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 		jsonObjectRequest.setRetryPolicy(policy);
 		signUpQueue.add(jsonObjectRequest);
@@ -202,10 +207,8 @@ public class SignUpActivity<signUpButton> extends Activity {
 	}
 	//点击验证码按钮
 	public void sendValidCode(View view){
-		Log.v("TAG", "aaaaaaaaaaaa");
         String phString=phonEditText.getText().toString();
         if(phString.length()==11){
-        	Log.v("TAG", "bbbbbbbbbbbbbb");
         	button.setEnabled(true);
         	validatePhoneNumber(false);
 		}else{
@@ -260,7 +263,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 			                Log.v("TAG", error.getMessage(), error);  
 			            }  
 			        });
-			int socketTimeout = 3000;//30 seconds - change to what you want
+			int socketTimeout = 30000;//30 seconds - change to what you want
 			RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 			stringRequest.setRetryPolicy(policy);
 			synchronized (signUpQueue) { signUpQueue.add(stringRequest); }
@@ -287,25 +290,23 @@ public class SignUpActivity<signUpButton> extends Activity {
 				public void onResponse(JSONObject response) {  
 					try {
 						if(response.get("state").toString().equals("error")){
-							Toast.makeText(SignUpActivity.this, "注册失败!", 1).show();
+							if_success = false;
 						}else{
-							mProgressDialog.cancel();
-							Toast.makeText(SignUpActivity.this, "注册成功!", 1).show();
 							String token = response.get("token").toString();
 							String user_id = response.get("user_id").toString();
 							saveTokenToPreference(token, user_id);
-							SignUpActivity.this.onBackPressed();
+							if_success = true;
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						Toast.makeText(SignUpActivity.this, "注册错误!", 1).show();
+						if_success = false;
 					}  
 				}  
 			}, new Response.ErrorListener() {  
 				@Override  
 				public void onErrorResponse(VolleyError error) {  
-					Log.v("TAG", error.getMessage(), error);  
+					if_success = false;
 				}  
 		});
 		int socketTimeout = 30000;//30 seconds - change to what you want
@@ -322,12 +323,21 @@ public class SignUpActivity<signUpButton> extends Activity {
 	}
 	// 开启注册进度条
 	private void showProgressDialog() {
-		mProgressDialog = new ProgressDialog(this);
-		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		mProgressDialog.setMessage("注册中...");
-		mProgressDialog.setIndeterminate(false);
-		mProgressDialog.setCancelable(false);
-		mProgressDialog.show();
+		final CustomProgress dialog = CustomProgress.show(this, "注册中...", true, null); 
+		new Handler().postDelayed(new Runnable(){  
+	        public void run(){    
+	            //等待10000毫秒后销毁此页面，并提示登陆成功  
+	            dialog.cancel();  
+	            if(if_success){
+	            	Toast.makeText(SignUpActivity.this, "注册成功", Toast.LENGTH_SHORT).show();  
+	            	
+	            	Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+	            	startActivity(intent);
+	            }else{
+	            	Toast.makeText(SignUpActivity.this, "注册失败!", 2).show();
+	            }
+	        }  
+	    }, 2500);
 	}
 	@Override
 	protected void onDestroy() {

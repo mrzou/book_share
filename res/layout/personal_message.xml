@@ -6,17 +6,19 @@
 	<LinearLayout 
 	    android:id="@+id/personal_linearlayout0"
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="40dp"
+        android:background="@color/title_color"
 	    android:orientation="horizontal">	
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="0.50"
             android:gravity="right"
             android:text="@string/personal_message"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
    		<Button
@@ -27,9 +29,8 @@
    		    android:layout_marginTop="10dp"
    		    android:layout_weight="0.30"
    		    android:gravity="right"
-            android:textColor="@color/red_black"
    		    android:text="@string/sign_out"
-   		    android:background="@color/white"
+   		    android:textColor="@color/white"
    		    android:textSize="20sp" />
 
     </LinearLayout>

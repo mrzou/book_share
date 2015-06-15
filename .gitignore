@@ -1,3 +1,4 @@
 /bin/classes/*/*/*.class
 /bin/classes/*/*/*/*.class
 /bin/classes/*/*/*/*/*.class
+/bin/*
