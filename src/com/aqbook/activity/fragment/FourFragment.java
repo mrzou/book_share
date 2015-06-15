@@ -18,12 +18,16 @@ import com.aqbook.R;
 import com.aqbook.activity.MainActivity;
 import com.aqbook.activity.SignUpActivity;
 import com.aqbook.activity.entity.CustomProgress;
+import com.aqbook.activity.entity.PublicMethod;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -96,37 +100,41 @@ public class FourFragment extends Fragment implements OnClickListener{
 		Map<String, Object> allMap = new HashMap<String, Object>();    
 		allMap.put("user", jsonObject);
 		JSONObject jsonObjectAll = new JSONObject(allMap);
-		makeDialog();
-		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/users/sign_in", jsonObjectAll,  
-			new Response.Listener<JSONObject>() {  
-				@Override  
-				public void onResponse(JSONObject response) {  
-					try {
-						if(!response.get("state").toString().equals("error")){
-							SharedPreferences.Editor editor = getActivity().getSharedPreferences("token", 0).edit();
-							editor.putString("token", response.get("token").toString());
-							editor.putString("user_id", response.get("user_id").toString());
-							editor.commit();
-							if_success = true;
-						}else{
-							
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+		if(PublicMethod.isNetworkConnected(getActivity())){
+			makeDialog();
+			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/users/sign_in", jsonObjectAll,  
+				new Response.Listener<JSONObject>() {  
+					@Override  
+					public void onResponse(JSONObject response) {  
+						try {
+							if(!response.get("state").toString().equals("error")){
+								SharedPreferences.Editor editor = getActivity().getSharedPreferences("token", 0).edit();
+								editor.putString("token", response.get("token").toString());
+								editor.putString("user_id", response.get("user_id").toString());
+								editor.commit();
+								if_success = true;
+							}else{
+								
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							if_success = false;
+						}  
+					}  
+				}, new Response.ErrorListener() {  
+					@Override  
+					public void onErrorResponse(VolleyError error) {  
 						if_success = false;
 					}  
-				}  
-			}, new Response.ErrorListener() {  
-				@Override  
-				public void onErrorResponse(VolleyError error) {  
-					if_success = false;
-				}  
-		});
-		int socketTimeout = 30000;//30 seconds - change to what you want
-		RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-		jsonObjectRequest.setRetryPolicy(policy);
-		signInQueue.add(jsonObjectRequest);
+			});
+			int socketTimeout = 30000;//30 seconds - change to what you want
+			RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+			jsonObjectRequest.setRetryPolicy(policy);
+			signInQueue.add(jsonObjectRequest);
+		}else{
+			Toast.makeText(getActivity(), "网络没有连接", 1).show();
+		}
 	}
 	public void makeDialog(){
 		final CustomProgress dialog = CustomProgress.show(getActivity(), "登录中...", true, null); 

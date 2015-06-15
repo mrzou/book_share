@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aqbook.R;
 import com.aqbook.activity.entity.CustomProgress;
+import com.aqbook.activity.entity.PublicMethod;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -84,7 +85,6 @@ public class SignUpActivity<signUpButton> extends Activity {
 		
 		setPhoneLostFocus();
 		validatePassword();
-		listenNetwork();
 	}
 	//验证密码长度及是否一致
 	public void validatePassword(){
@@ -140,44 +140,48 @@ public class SignUpActivity<signUpButton> extends Activity {
 	}
 	//到后台去验证手机号码是否重复
 	public void validatePhoneNumber(final boolean state){
-		Log.v("TAG", "validatePhoneNumber");
 		button.setEnabled(true);
     	Map<String, Object> phoneNumber = new HashMap<String, Object>();    
 		phoneNumber.put("phone_number", phonEditText.getText().toString());    
 		JSONObject jsonObject = new JSONObject(phoneNumber); 
-		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/validate_messages/validatePhoneNumber", jsonObject,  
-	        new Response.Listener<JSONObject>() {  
-	            @Override  
-	            public void onResponse(JSONObject response) {  
-	            	signUpButton = (Button) findViewById(R.id.sign_up);
-	            	try {
-						if(response.get("state").equals("error")){
-							Toast.makeText(SignUpActivity.this, "手机号已注册", Toast.LENGTH_SHORT).show();
-							button.setEnabled(false);
-							if(signUpButton.isEnabled()){signUpButton.setEnabled(false);}
-						}else{
-							button.setEnabled(true);
-							signUpButton.setEnabled(true);
-							if(!state){
-								SMSSDK.getVerificationCode("86",phonEditText.getText().toString());	
+		if(PublicMethod.isNetworkConnected(this)){
+			Log.v("TAG", "excute");
+			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/validate_messages/validatePhoneNumber", jsonObject,  
+		        new Response.Listener<JSONObject>() {  
+		            @Override  
+		            public void onResponse(JSONObject response) {  
+		            	signUpButton = (Button) findViewById(R.id.sign_up);
+		            	try {
+							if(response.get("state").equals("error")){
+								Toast.makeText(SignUpActivity.this, "手机号已注册", Toast.LENGTH_SHORT).show();
+								button.setEnabled(false);
+								if(signUpButton.isEnabled()){signUpButton.setEnabled(false);}
+							}else{
+								button.setEnabled(true);
+								signUpButton.setEnabled(true);
+								if(!state){
+									SMSSDK.getVerificationCode("86",phonEditText.getText().toString());	
+								}
 							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							Log.v("TAG", "Jsonexceition");
 						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						Log.v("TAG", "Jsonexceition");
-					}
-	            }  
-	        }, new Response.ErrorListener() {  
-	            @Override  
-	            public void onErrorResponse(VolleyError error) {  
-	                Log.v("TAG", error.getMessage(), error);
-	            }  
-	        });  
-		int socketTimeout = 50000;//30 seconds - change to what you want
-		RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-		jsonObjectRequest.setRetryPolicy(policy);
-		signUpQueue.add(jsonObjectRequest);
+		            }  
+		        }, new Response.ErrorListener() {  
+		            @Override  
+		            public void onErrorResponse(VolleyError error) {  
+		                Log.v("TAG", error.getMessage(), error);
+		            }  
+		        });  
+			int socketTimeout = 50000;//30 seconds - change to what you want
+			RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+			jsonObjectRequest.setRetryPolicy(policy);
+			signUpQueue.add(jsonObjectRequest);
+		}else{
+			Toast.makeText(this, "网络没有连接", 1).show();
+		}
 	}
 	public void click_to_back(View view){
 		this.onBackPressed();
@@ -398,28 +402,5 @@ public class SignUpActivity<signUpButton> extends Activity {
         linearLayout.requestFocus();
 	    imm.hideSoftInputFromWindow(phonEditText.getWindowToken(), 0); 
         return super.onTouchEvent(event);
-    }
-    //注册监听广播
-    public void listenNetwork(){
-    	IntentFilter intentFilter = new IntentFilter();
-    	intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANG");
-    	NetworkChangeReceiver networkReceiver = new NetworkChangeReceiver();
-    	registerReceiver(networkReceiver, intentFilter);
-    }
-    //监听广播
-    public class NetworkChangeReceiver extends BroadcastReceiver {
-
-    	@Override
-    	public void onReceive(Context arg0, Intent arg1) {
-    		// TODO Auto-generated method stub
-
-    		ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-    		NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
-    		if (networkInfo != null && networkInfo.isAvailable()){
-    			Toast.makeText(SignUpActivity.this, "network is avalable", 1).show();
-    		}else{
-    			Toast.makeText(SignUpActivity.this, "network is unavailiable", 1).show();
-    		}
-    	}
     }
 }
