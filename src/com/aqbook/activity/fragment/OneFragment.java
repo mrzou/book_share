@@ -28,6 +28,7 @@ public class OneFragment extends Fragment implements ILoadListener{
 		this.view = inflater.inflate(R.layout.fargment_one, null);
 		showListView(apk_list, true);
 		
+		Log.v("TAG", "Fragment1");
 		return this.view;
 	}
 	@Override

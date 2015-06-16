@@ -62,6 +62,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 		
 		signInQueue = Volley.newRequestQueue(getActivity());
 		testIfToken(inflater);
+		Log.v("TAG", "Fragment4");
 		return view;
 	}
 	//登陆注册按钮
@@ -194,11 +195,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 		});
 	}
 	public void confirmToLogOut(){
-		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-		dialog.setTitle("提示!");
-		dialog.setMessage("确定退出?");
-		dialog.setCancelable(false);
-		dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+		PublicMethod.makeDialog(getActivity(), new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
@@ -209,12 +206,12 @@ public class FourFragment extends Fragment implements OnClickListener{
 				editor.commit();
 				Toast.makeText(getActivity(), "用户退出成功", 1).show();
 				
+				getActivity().finish();
 				Intent intent = new Intent(getActivity(), MainActivity.class);
 				intent.putExtra("page", "3");
 				startActivity(intent);
 			}
-		});
-		dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+		}, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
@@ -222,8 +219,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 				
 			}
 			
-		});
-		dialog.show();
+		}).show();
 	}
 	@Override
 	public void onDetach(){

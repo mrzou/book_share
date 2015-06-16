@@ -5,6 +5,7 @@ import java.util.List;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 /**
  * 定义适配器
@@ -22,6 +23,7 @@ public class CustomeFragmentPagerAdapter extends FragmentPagerAdapter {
 	 */
 	@Override
 	public Fragment getItem(int arg0) {
+		Log.v("TAG", "arg0="+String.valueOf(arg0));
 		return (fragmentList == null || fragmentList.size() == 0) ? null
 				: fragmentList.get(arg0);
 	}

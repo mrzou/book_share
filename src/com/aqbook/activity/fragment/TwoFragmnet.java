@@ -82,6 +82,7 @@ public class TwoFragmnet extends Fragment {
 				startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
 			}
 		});
+		Log.v("TAG", "Fragment2");
 		return view;
 	}
 	

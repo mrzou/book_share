@@ -10,7 +10,6 @@ import com.aqbook.activity.fragment.TwoFragmnet;
 import com.aqbook.R;
 import com.aqbook.activity.adapter.CustomeFragmentPagerAdapter;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,7 @@ import android.widget.LinearLayout;
 //import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity{
 
 	private ViewPager viewPager;// 页卡内容
 	private List<Fragment> fragments;// Tab页面列表
@@ -46,13 +45,13 @@ public class MainActivity extends FragmentActivity {
 				R.color.tab_title_normal_color);
 
 		InitTextView();
-		InitViewPager();
+		InitViewPager(0);
 	}
 
 	/**
 	 * 初始化Viewpager页
 	 */
-	private void InitViewPager() {
+	private void InitViewPager(int page) {
 		viewPager = (ViewPager) findViewById(R.id.vPager);
 		fragments = new ArrayList<Fragment>();
 		fragments.add(new OneFragment());
@@ -60,7 +59,7 @@ public class MainActivity extends FragmentActivity {
 		fragments.add(new ThreeFragment());
 		fragments.add(new FourFragment());
 		viewPager.setAdapter(new CustomeFragmentPagerAdapter(getSupportFragmentManager(), fragments));
-		viewPager.setCurrentItem(0);                   //初始化page的fragment
+		viewPager.setCurrentItem(page);                   //初始化page的fragment
 		viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
 
@@ -105,22 +104,25 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		public void onClick(View v) {
+			Log.v("TAG", "excute setCurrentItemclick"+index);
 			viewPager.setCurrentItem(index, true);
 		}
-
 	}
 
 	/**
 	 * 为选项卡绑定监听器
 	 */
 	public class MyOnPageChangeListener implements OnPageChangeListener {
-
+		
+		@Override
 		public void onPageScrollStateChanged(int index) {
 		}
-
+		
+		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		}
-
+		
+		@Override
 		public void onPageSelected(int index) {
 			int i;
 			LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
@@ -138,6 +140,7 @@ public class MainActivity extends FragmentActivity {
 					textView2.setTextColor(selectedColor);
 				}
 			}
+			Log.v("TAG", "excute setCurrentItemchange"+index);
 			viewPager.setCurrentItem(index, false);
 		}
 	}
@@ -145,6 +148,5 @@ public class MainActivity extends FragmentActivity {
 	protected void onResume() {  
 	    super.onResume();
 	    viewPager.setCurrentItem(0, false);
-	}  
-
+	}
 }
