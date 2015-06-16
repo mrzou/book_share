@@ -10,6 +10,7 @@ import com.aqbook.activity.fragment.TwoFragmnet;
 import com.aqbook.R;
 import com.aqbook.activity.adapter.CustomeFragmentPagerAdapter;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +35,7 @@ public class MainActivity extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-
+		
 		initView();
 	}
 
@@ -104,7 +105,6 @@ public class MainActivity extends FragmentActivity{
 		}
 
 		public void onClick(View v) {
-			Log.v("TAG", "excute setCurrentItemclick"+index);
 			viewPager.setCurrentItem(index, true);
 		}
 	}
@@ -140,13 +140,19 @@ public class MainActivity extends FragmentActivity{
 					textView2.setTextColor(selectedColor);
 				}
 			}
-			Log.v("TAG", "excute setCurrentItemchange"+index);
 			viewPager.setCurrentItem(index, false);
 		}
 	}
 	@Override  
 	protected void onResume() {  
 	    super.onResume();
-	    viewPager.setCurrentItem(0, false);
+	    Intent intent = getIntent();
+	    Log.v("TAG", "id="+intent.getStringExtra("id"));
+	    String index = intent.getStringExtra("id");
+	    if(index == null){
+	    	viewPager.setCurrentItem(0, false);
+	    }else{
+	    	viewPager.setCurrentItem(Integer.parseInt(index), false);
+	    }
 	}
 }

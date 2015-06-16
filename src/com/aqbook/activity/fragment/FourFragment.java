@@ -62,7 +62,6 @@ public class FourFragment extends Fragment implements OnClickListener{
 		
 		signInQueue = Volley.newRequestQueue(getActivity());
 		testIfToken(inflater);
-		Log.v("TAG", "Fragment4");
 		return view;
 	}
 	//登陆注册按钮
@@ -146,7 +145,9 @@ public class FourFragment extends Fragment implements OnClickListener{
 	            if(if_success){
 	            	Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();  
 	            	
+	            	getActivity().finish();
 	            	Intent intent = new Intent(getActivity(), MainActivity.class);
+	            	intent.putExtra("id", 3);
 	            	startActivity(intent);
 	            }else{
 	            	Toast.makeText(getActivity(), "登陆失败!", 1).show();
@@ -175,9 +176,10 @@ public class FourFragment extends Fragment implements OnClickListener{
 		TextView goto_collect_book = (TextView) view.findViewById(R.id.goto_collect_book);
 		signOutView = (Button) view.findViewById(R.id.sign_out);
 		Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "icon_little.ttf");
+		Typeface messageIcont = Typeface.createFromAsset(getActivity().getAssets(), "message.ttf");
 		Typeface sign_out = Typeface.createFromAsset(getActivity().getAssets(), "sign_out.ttf");
-		already_come_out.setTypeface(iconfont);
-		collect_book.setTypeface(iconfont);
+		already_come_out.setTypeface(messageIcont);
+		collect_book.setTypeface(messageIcont);
 		goto_already_come_out.setTypeface(iconfont);
 		goto_collect_book.setTypeface(iconfont);
 		signOutView.setTypeface(sign_out);
@@ -208,7 +210,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 				
 				getActivity().finish();
 				Intent intent = new Intent(getActivity(), MainActivity.class);
-				intent.putExtra("page", "3");
+				intent.putExtra("id", "3");
 				startActivity(intent);
 			}
 		}, new DialogInterface.OnClickListener() {

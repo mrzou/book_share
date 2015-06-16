@@ -26,15 +26,19 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aqbook.R;
 import com.aqbook.activity.MipcaActivityCapture;
+import com.aqbook.activity.entity.PublicMethod;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.DocumentsContract.Document;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,10 +80,15 @@ public class TwoFragmnet extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(activity, MipcaActivityCapture.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
+				SharedPreferences token = getActivity().getSharedPreferences("token", 0);
+				if(token.getString("token", "").equals("")){
+					PublicMethod.makeAlertDialog(getActivity(), null).show();
+				}else{
+					Intent intent = new Intent();
+					intent.setClass(activity, MipcaActivityCapture.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
+				}
 			}
 		});
 		Log.v("TAG", "Fragment2");

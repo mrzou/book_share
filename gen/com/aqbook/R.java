@@ -324,31 +324,33 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f08004e;
         public static final int add_book=0x7f080058;
-        public static final int add_book_enjoy=0x7f080065;
-        public static final int add_book_string1=0x7f080064;
-        public static final int add_book_to=0x7f080063;
+        public static final int add_book_enjoy=0x7f080067;
+        public static final int add_book_string1=0x7f080066;
+        public static final int add_book_to=0x7f080065;
         public static final int app_name=0x7f08004d;
         public static final int circle=0x7f08005b;
+        public static final int collect_book=0x7f080063;
         public static final int comment=0x7f080056;
         public static final int forward=0x7f080055;
         public static final int fragment_two_hint=0x7f080050;
         public static final int hello_world=0x7f08004f;
         public static final int help_icon=0x7f08005d;
-        public static final int if_enjoy=0x7f080062;
+        public static final int if_enjoy=0x7f080064;
         public static final int inform=0x7f08005c;
         public static final int line=0x7f08005f;
         public static final int little_book=0x7f08005a;
         public static final int logup=0x7f080060;
-        public static final int main_activity_title=0x7f080067;
+        public static final int main_activity_title=0x7f080069;
         /**  扫描用的string 
          */
-        public static final int menu_settings=0x7f08006a;
-        public static final int passwor_allert=0x7f080068;
-        public static final int personal_message=0x7f080069;
+        public static final int menu_settings=0x7f08006c;
+        public static final int open_book=0x7f080062;
+        public static final int passwor_allert=0x7f08006a;
+        public static final int personal_message=0x7f08006b;
         public static final int return_action=0x7f080059;
-        public static final int scan_add_book=0x7f080066;
+        public static final int scan_add_book=0x7f080068;
         public static final int scan_book=0x7f08005e;
-        public static final int scan_text=0x7f08006b;
+        public static final int scan_text=0x7f08006d;
         public static final int setting=0x7f080057;
         public static final int sign_out=0x7f080061;
         public static final int smssdk_add_contact=0x7f080047;
@@ -432,8 +434,8 @@ public final class R {
         public static final int tab_2=0x7f080052;
         public static final int tab_3=0x7f080053;
         public static final int tab_4=0x7f080054;
-        public static final int title_activity_loading=0x7f08006d;
-        public static final int title_activity_user_to_log_up=0x7f08006c;
+        public static final int title_activity_loading=0x7f08006f;
+        public static final int title_activity_user_to_log_up=0x7f08006e;
     }
     public static final class style {
         /** 
@@ -460,6 +462,7 @@ public final class R {
         /**  输入框的风格 
          */
         public static final int InputStyle=0x7f090005;
+        public static final int MessageItem=0x7f090008;
         /**  输入框前面文字的风格 
          */
         public static final int TextStyle=0x7f090006;

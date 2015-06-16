@@ -22,6 +22,9 @@
     <string name="line">&#xe655;</string>
     <string name="logup">&#xe604;</string>
     <string name="sign_out">&#xe6b1;</string>
+    <string name="open_book">&#xe6cc;</string>
+    <string name="collect_book">&#xe616;</string>
+    
     <string name="if_enjoy">是否分享</string>
     <string name="add_book_to">添加图书</string>
     <string name="add_book_string1">仅次于选择益友，就是选择好书</string>

@@ -46,13 +46,8 @@
 	    android:orientation="horizontal">
 	    <TextView 
 	        android:id="@+id/already_come_out"
-	        android:layout_width="46dp"
-	        android:layout_height="47dp"	
-	        android:layout_marginLeft="16dp"
-	        android:gravity="center"
-	        android:textSize="22sp"
-	      	android:textColor="#FFFFFF"
-	        android:text="@string/comment"
+	        style="@style/MessageItem"
+	        android:text="@string/open_book"
 	        android:background="@drawable/green"/>
 	    <TextView 
 	        android:layout_width="0dp"
@@ -82,13 +77,8 @@
 	    android:orientation="horizontal">	
         <TextView 
 	        android:id="@+id/collect_book"
-	        android:layout_width="46dp"
-	        android:layout_height="47dp"
-	        android:layout_marginLeft="16dp"
-	        android:gravity="center"
-	        android:textColor="#FFFFFF"
-	        android:textSize="21sp"
-	        android:text="@string/help_icon"
+	        style="@style/MessageItem"
+	        android:text="@string/collect_book"
 	        android:background="@drawable/purple"/>
 	    <TextView 
 	        android:layout_width="0dp"
