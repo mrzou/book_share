@@ -83,8 +83,8 @@ public class MainActivity extends FragmentActivity{
 
 	private void makeMenuOfBottom(int linearLayoutId, String text, int index){
 		Typeface iconfont = Typeface.createFromAsset(getAssets(), "iconfont.ttf");
-		LinearLayout linearLayout = (LinearLayout) findViewById(linearLayoutId);
 		
+		LinearLayout linearLayout = (LinearLayout) findViewById(linearLayoutId);
 		linearLayout.setOnClickListener(new MyOnClickListener(index));
 //		设置主页底下菜单的图片和文字
 		((TextView) linearLayout.getChildAt(0)).setTypeface(iconfont);

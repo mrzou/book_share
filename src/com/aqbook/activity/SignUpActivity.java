@@ -24,14 +24,10 @@ import com.aqbook.activity.entity.PublicMethod;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -191,7 +187,6 @@ public class SignUpActivity<signUpButton> extends Activity {
 	public void initSendMessageSdk(){
 		SMSSDK.initSDK(this, APPKEY, APPSECRET);
         EventHandler eh=new EventHandler(){
- 
             @Override
             public void afterEvent(int event, int result, Object data) {
             	
@@ -372,11 +367,12 @@ public class SignUpActivity<signUpButton> extends Activity {
 				//短信注册成功后，返回MainActivity,然后提示新好友
 				if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {//提交验证码成功
 					Toast.makeText(getApplicationContext(), "提交验证码成功", Toast.LENGTH_SHORT).show();
-//					textView2.setText("提交验证码成功");
+					//textView2.setText("提交验证码成功");
 				} else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
 					Toast.makeText(getApplicationContext(), "验证码已经发送", Toast.LENGTH_SHORT).show();
-//					textView2.setText("验证码已经发送");
+					//textView2.setText("验证码已经发送");
 				}
+				//倒计时
 				new CountDownTimer(60000, 1000) {
 
 				     public void onTick(long millisUntilFinished) {

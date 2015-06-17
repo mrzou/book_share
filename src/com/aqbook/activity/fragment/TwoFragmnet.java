@@ -217,7 +217,7 @@ public class TwoFragmnet extends Fragment {
                         Log.e("TAG", error.getMessage(), error);  
                     }  
                 });
-		int socketTimeout = 3000;//30 seconds - change to what you want
+		int socketTimeout = 30000;//30 seconds - change to what you want
 		RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 		stringRequest.setRetryPolicy(policy);
 		mQueue.add(stringRequest);
@@ -232,18 +232,16 @@ public class TwoFragmnet extends Fragment {
         final ImageView bookImg = new ImageView(activity);
         bookImg.setLayoutParams(new LayoutParams(270, 360));
         bookImg.setBackgroundColor(R.color.white);
-        ImageRequest imageRequest = new ImageRequest(  
-                bookArray.get(0),  
-                new Response.Listener<Bitmap>() {  
-                    @Override  
-                    public void onResponse(Bitmap response) {  
-                        bookImg.setImageBitmap(response);  
-                    }  
-                }, 270, 360, Config.RGB_565, new Response.ErrorListener() {  
-                    @Override  
-                    public void onErrorResponse(VolleyError error) {  
-                    }  
-                });  
+        ImageRequest imageRequest = new ImageRequest(bookArray.get(0), new Response.Listener<Bitmap>() {  
+            @Override  
+            public void onResponse(Bitmap response) {  
+                bookImg.setImageBitmap(response);  
+            }  
+        },270, 360, Config.RGB_565, new Response.ErrorListener() {  
+            @Override  
+            public void onErrorResponse(VolleyError error) {  
+            }  
+        });  
         mQueue.add(imageRequest);
         LinearLayout bookIntroduce = setBookIntroduce();
         scanBookLinearLayout.addView(bookImg);

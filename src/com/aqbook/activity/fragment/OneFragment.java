@@ -35,7 +35,9 @@ public class OneFragment extends Fragment implements ILoadListener{
 	    super.onCreate(savedInstanceState);
 	    setRetainInstance(true);    
 	}
-	
+	/*apk_list是传入listview中的全部数据
+	loadData为真就是数据没有改变
+	loadData为假数据就是刷新后的*/
 	private void showListView(ArrayList<ListViewItem> apk_list, boolean loadData) {
 		if (loadData) {
 			apk_list = apk_list.isEmpty() ? getData():apk_list;      //切换fragment时会重复加载该类，但是apk_list的值不变
