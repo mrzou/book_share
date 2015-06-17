@@ -29,7 +29,12 @@ public class MainActivity extends FragmentActivity{
 	private ViewPager viewPager;// 页卡内容
 	private List<Fragment> fragments;// Tab页面列表
 	private int selectedColor, unSelectedColor;
+	private String indexId = "0";
+	private static int indexPager = 0;
 	
+	public static void setIndexPager(int index){
+		indexPager = index;
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -146,13 +151,24 @@ public class MainActivity extends FragmentActivity{
 	@Override  
 	protected void onResume() {  
 	    super.onResume();
-	    Intent intent = getIntent();
+	    /*Intent intent = getIntent();
 	    Log.v("TAG", "id="+intent.getStringExtra("id"));
 	    String index = intent.getStringExtra("id");
-	    if(index == null){
+	    if(indexId.equals("1")){
+	    	viewPager.setCurrentItem(1);
+	    }else if(index == null){
 	    	viewPager.setCurrentItem(0, false);
 	    }else{
 	    	viewPager.setCurrentItem(Integer.parseInt(index), false);
-	    }
+	    }*/
+	    viewPager.setCurrentItem(indexPager);
+	    indexPager = 0;
 	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle bundle = data.getExtras();
+        bundle.getString("result");
+        indexPager = Integer.parseInt(bundle.getString("id"));
+    }
 }

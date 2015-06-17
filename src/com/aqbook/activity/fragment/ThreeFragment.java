@@ -38,7 +38,7 @@ public class ThreeFragment extends Fragment {
 		SharedPreferences token = getActivity().getSharedPreferences("token", 0);
 		if(token.getString("token", "").equals("")){
 			view = inflater.inflate(R.layout.fragment_three_select, null);
-			FourFragment anotherFragment = new FourFragment();
+			FourFragment anotherFragment = new FourFragment(true);
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			transaction.replace(R.id.id_content, anotherFragment);
 		transaction.commit();

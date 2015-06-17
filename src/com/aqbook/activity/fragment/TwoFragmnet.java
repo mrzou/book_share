@@ -8,24 +8,20 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.json.JSONObject;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aqbook.R;
 import com.aqbook.activity.MipcaActivityCapture;
+import com.aqbook.activity.entity.EditTextWatcher;
 import com.aqbook.activity.entity.PublicMethod;
 
 import android.annotation.SuppressLint;
@@ -36,9 +32,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.DocumentsContract.Document;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -60,6 +55,9 @@ public class TwoFragmnet extends Fragment {
 	
 	TextView textView1;
 	TextView textViewOfAddbook;
+	
+	private EditText editText;
+	private Button button;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +89,9 @@ public class TwoFragmnet extends Fragment {
 				}
 			}
 		});
-		Log.v("TAG", "Fragment2");
+		editText = (EditText) view.findViewById(R.id.enjoyText);
+		button = (Button) view.findViewById(R.id.comeOutBook);
+		editText.addTextChangedListener(new EditTextWatcher(button));
 		return view;
 	}
 	
@@ -165,8 +165,9 @@ public class TwoFragmnet extends Fragment {
         LinearLayout bookIntroduce = setBookIntroduce(bookArray);
         scanBookLinearLayout.addView(bookImg);
         scanBookLinearLayout.addView(bookIntroduce);
-        view.findViewById(R.id.comeOutBook).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.enjoyText).setVisibility(View.VISIBLE);
+        editText.setVisibility(View.VISIBLE);
+        button.setVisibility(View.VISIBLE);
+        button.setEnabled(false);
 	}
 	public LinearLayout setBookIntroduce(ArrayList<String> booArray){
 		LinearLayout linearLayout = new LinearLayout(activity);

@@ -49,10 +49,19 @@ public class FourFragment extends Fragment implements OnClickListener{
 	Button signInButton;
 	private boolean if_success = false;
 	private RequestQueue signInQueue;
+	private boolean anotherUser = false;
 	
 	LayoutInflater inflatera;
 	ViewGroup containera;
 	Bundle savedInstanceStatea;
+	
+	public FourFragment(){
+		
+	}
+	
+	public FourFragment(boolean anotherUser){
+		this.anotherUser = anotherUser;
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -149,6 +158,11 @@ public class FourFragment extends Fragment implements OnClickListener{
 	            	Intent intent = new Intent(getActivity(), MainActivity.class);
 	            	intent.putExtra("id", 3);
 	            	startActivity(intent);
+	            	if(anotherUser){
+	            		MainActivity.setIndexPager(2);
+	            	}else{
+	            		MainActivity.setIndexPager(3);
+	            	}
 	            }else{
 	            	Toast.makeText(getActivity(), "登陆失败!", 1).show();
 	            }
@@ -210,8 +224,8 @@ public class FourFragment extends Fragment implements OnClickListener{
 				
 				getActivity().finish();
 				Intent intent = new Intent(getActivity(), MainActivity.class);
-				intent.putExtra("id", "3");
 				startActivity(intent);
+				MainActivity.setIndexPager(3);
 			}
 		}, new DialogInterface.OnClickListener() {
 

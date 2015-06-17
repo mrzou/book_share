@@ -72,24 +72,34 @@
             android:text="@string/scan_book"
             android:textSize="70sp" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/enjoyText"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:visibility="invisible"
-        android:hint="@string/fragment_two_hint" />
-    
-    <Button
-        android:id="@+id/comeOutBook"
-        android:layout_width="194dp"
-        android:layout_height="41dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="发布" 
-        android:descendantFocusability="blocksDescendants"
-        android:visibility="invisible"/>"
+	<LinearLayout
+        android:id="@+id/scan_book_id"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+	    <EditText
+	        android:id="@+id/enjoyText"
+	        android:layout_width="300dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="20dp"
+	        android:inputType="textCapSentences|textMultiLine"
+		   	android:maxLines ="4" 
+		   	android:maxLength ="2000" 
+		   	android:scrollHorizontally="false"
+	        android:visibility="invisible"
+	        android:background="@drawable/edit_text"/>
+	    
+	    <Button
+	        android:id="@+id/comeOutBook"
+	        android:layout_width="wrap_content"
+	        android:layout_height="35dp"
+	        android:layout_gravity="center"
+	        android:gravity="center"
+	        android:text="发布" 
+	        android:descendantFocusability="blocksDescendants"
+	        android:visibility="invisible"/>"
+    </LinearLayout>
 
 </LinearLayout>

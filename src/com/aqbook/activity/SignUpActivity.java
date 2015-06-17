@@ -185,6 +185,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 	}
 	public void click_to_back(View view){
 		this.onBackPressed();
+		MainActivity.setIndexPager(3);
 	}
 //	初始化短信通知的sdk
 	public void initSendMessageSdk(){
