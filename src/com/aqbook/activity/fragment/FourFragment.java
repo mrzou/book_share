@@ -71,6 +71,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 		
 		signInQueue = Volley.newRequestQueue(getActivity());
 		testIfToken(inflater);
+		Log.v("TAG", "froufragment");
 		return view;
 	}
 	//登陆注册按钮
@@ -120,6 +121,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 								SharedPreferences.Editor editor = getActivity().getSharedPreferences("token", 0).edit();
 								editor.putString("token", response.get("token").toString());
 								editor.putString("user_id", response.get("user_id").toString());
+								editor.putString("user_name", response.get("user_name").toString());
 								editor.commit();
 								if_success = true;
 							}else{
@@ -219,6 +221,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 				SharedPreferences.Editor editor = getActivity().getSharedPreferences("token", 0).edit();
 				editor.putString("token", "");
 				editor.putString("user_id", "");
+				editor.putString("user_name", "");
 				editor.commit();
 				Toast.makeText(getActivity(), "用户退出成功", 1).show();
 				

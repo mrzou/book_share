@@ -19,6 +19,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:scrollbars="none"
         android:dividerHeight="5dip" />
 
 </LinearLayout>

@@ -20,11 +20,9 @@ import android.view.ViewGroup;
 public class CustomeFragmentPagerAdapter extends FragmentPagerAdapter {
 	
 	private List<Fragment> fragmentList;
-	private Context context;
 	public CustomeFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
 		super(fm);
 		this.fragmentList = fragmentList;
-		this.context = context;
 	}
 
 	/**
@@ -53,6 +51,7 @@ public class CustomeFragmentPagerAdapter extends FragmentPagerAdapter {
 	}
 	@Override
 	public void destroyItem (ViewGroup container, int position, Object object){
+		super.destroyItem(container, position, object);
 		Log.v("TAG", "position = "+position);
 	}
 }

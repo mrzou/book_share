@@ -304,7 +304,8 @@ public class SignUpActivity<signUpButton> extends Activity {
 						}else{
 							String token = response.get("token").toString();
 							String user_id = response.get("user_id").toString();
-							saveTokenToPreference(token, user_id);
+							String user_name = response.get("user_name").toString();
+							saveTokenToPreference(token, user_id, user_name);
 							if_success = true;
 						}
 					} catch (JSONException e) {
@@ -325,10 +326,11 @@ public class SignUpActivity<signUpButton> extends Activity {
 		signUpQueue.add(jsonObjectRequest);
 	}
 	//保存token的消息
-	public void saveTokenToPreference(String token, String user_id){
+	public void saveTokenToPreference(String token, String user_id, String user_name){
 		SharedPreferences.Editor editor = getSharedPreferences("token", MODE_PRIVATE).edit();
 		editor.putString("token", token);
 		editor.putString("user_id", user_id);
+		editor.putString("user_name", user_name);
 		editor.commit();
 	}
 	// 开启注册进度条
@@ -341,8 +343,10 @@ public class SignUpActivity<signUpButton> extends Activity {
 	            if(if_success){
 	            	Toast.makeText(SignUpActivity.this, "注册成功", Toast.LENGTH_SHORT).show();  
 	            	
+	            	SignUpActivity.this.finish();
 	            	Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
 	            	startActivity(intent);
+	            	MainActivity.setIndexPager(0);
 	            }else{
 	            	Toast.makeText(SignUpActivity.this, "注册失败!", 2).show();
 	            }

@@ -41,7 +41,7 @@ public class OneFragment extends Fragment implements ILoadListener{
 			apk_list = apk_list.isEmpty() ? getData():apk_list;      //切换fragment时会重复加载该类，但是apk_list的值不变
 			listview = (LoadListView) view.findViewById(R.id.fragment1_listview);
 			listview.setInterface(this);
-			adapter = new ListViewAdapter(getActivity(), apk_list);
+			adapter = new ListViewAdapter(getActivity(), apk_list, getActivity());
 			listview.setAdapter(adapter);
 		} else {
 			adapter.onDateChange(apk_list);
@@ -51,9 +51,10 @@ public class OneFragment extends Fragment implements ILoadListener{
 	private ArrayList<ListViewItem> getData() {
 		for (int i = 0; i < 10; i++) {
 			ListViewItem entity = new ListViewItem();
-			entity.setName("hello");
-			entity.setInfo("this is about hello");
-			entity.setDes("descript");
+			entity.setTitle("android疯狂讲义");
+			entity.setAuthor("李刚");
+			entity.setInfo("计算机便携化是未来的发展趋势，而Android作为最受欢迎的手机、平板电脑操作之一，其发展的上升势头是势不可当的。而Android应用选择了");
+			entity.setReason("好好好");
 			apk_list.add(entity);
 		}
 		return apk_list;
@@ -61,9 +62,10 @@ public class OneFragment extends Fragment implements ILoadListener{
 	private void getLoadData() {
 		for (int i = 0; i < 2; i++) {
 			ListViewItem entity = new ListViewItem();
-			entity.setName("loaddata");
-			entity.setInfo("data for load");
-			entity.setDes("about loaddata");
+			entity.setTitle("android疯狂讲义");
+			entity.setAuthor("李刚");
+			entity.setInfo("计算机便携化是未来的发展趋势，而Android作为最受欢迎的手机、平板电脑操作之一，其发展的上升势头是势不可当的。而Android应用选择了");
+			entity.setReason("load data");
 			apk_list.add(entity);
 		}
 	}

@@ -145,22 +145,13 @@ public class MainActivity extends FragmentActivity{
 					textView2.setTextColor(selectedColor);
 				}
 			}
+			indexPager = index;
 			viewPager.setCurrentItem(index, false);
 		}
 	}
 	@Override  
 	protected void onResume() {  
 	    super.onResume();
-	    /*Intent intent = getIntent();
-	    Log.v("TAG", "id="+intent.getStringExtra("id"));
-	    String index = intent.getStringExtra("id");
-	    if(indexId.equals("1")){
-	    	viewPager.setCurrentItem(1);
-	    }else if(index == null){
-	    	viewPager.setCurrentItem(0, false);
-	    }else{
-	    	viewPager.setCurrentItem(Integer.parseInt(index), false);
-	    }*/
 	    viewPager.setCurrentItem(indexPager);
 	    indexPager = 0;
 	}

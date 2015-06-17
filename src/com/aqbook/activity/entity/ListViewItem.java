@@ -1,20 +1,21 @@
 package com.aqbook.activity.entity;
 
 public class ListViewItem {
-	private String name;
-	private String des;
+	private String title;
+	private String author;
 	private String info;
-	public String getName() {
-		return name;
+	private String reason;
+	public String getTitle() {
+		return title;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getDes() {
-		return des;
+	public String getAuthor() {
+		return author;
 	}
-	public void setDes(String des) {
-		this.des = des;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 	public String getInfo() {
 		return info;
@@ -22,5 +23,12 @@ public class ListViewItem {
 	public void setInfo(String info) {
 		this.info = info;
 	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
 	
 }
