@@ -45,8 +45,7 @@
             android:id="@+id/item3_apkiv"
             android:layout_width="100dip"
             android:layout_height="150dp"
-            android:layout_marginLeft="10dip"
-            android:background="@drawable/crazy_android_analy" />
+            android:layout_marginLeft="10dip" />
 
         <LinearLayout
             android:layout_width="wrap_content"

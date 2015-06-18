@@ -1,10 +1,19 @@
 package com.aqbook.activity.entity;
 
+import android.graphics.Bitmap;
+
 public class ListViewItem {
 	private String title;
 	private String author;
 	private String info;
 	private String reason;
+	private String picture;
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 	public String getTitle() {
 		return title;
 	}
