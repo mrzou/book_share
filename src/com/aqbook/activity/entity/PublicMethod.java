@@ -34,10 +34,10 @@ public class PublicMethod {
 		return dialog;
     }
     //弹出窗口的封装
-    public static AlertDialog.Builder makeAlertDialog(final Context context, DialogInterface.OnClickListener sureListener){
+    public static AlertDialog.Builder makeAlertDialog(final Context context, DialogInterface.OnClickListener sureListener, String message){
     	AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 		dialog.setTitle("提示!");
-		dialog.setMessage("还未登陆?");
+		dialog.setMessage(message);
 		dialog.setCancelable(false);
 		dialog.setPositiveButton("确定", sureListener);
 		return dialog;

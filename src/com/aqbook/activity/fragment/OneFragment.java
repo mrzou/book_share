@@ -14,9 +14,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aqbook.R;
-import com.aqbook.activity.SignUpActivity;
 import com.aqbook.activity.adapter.ListViewAdapter;
 import com.aqbook.activity.entity.ListViewItem;
+import com.aqbook.activity.entity.PublicMethod;
 import com.aqbook.activity.view.LoadListView;
 import com.aqbook.activity.view.LoadListView.ILoadListener;
 
@@ -27,13 +27,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 public class OneFragment extends Fragment implements ILoadListener{
 	
 	private View view;
 	ListViewAdapter adapter;
 	LoadListView listview;
+	
+	private int pageCount = 0;
 	
 	private RequestQueue signUpQueue;
 	
@@ -43,7 +44,12 @@ public class OneFragment extends Fragment implements ILoadListener{
 			Bundle savedInstanceState) {
 		this.view = inflater.inflate(R.layout.fargment_one, null);
 		signUpQueue = Volley.newRequestQueue(getActivity());
-		
+		boolean if_net = PublicMethod.isNetworkConnected(getActivity());
+		if(!if_net){
+			(view.findViewById(R.id.alert_net)).setVisibility(View.VISIBLE);
+		}else{
+			(view.findViewById(R.id.alert_net)).setVisibility(View.INVISIBLE);
+		}
 		getListViewData(true);
 		
 		return this.view;
@@ -56,25 +62,20 @@ public class OneFragment extends Fragment implements ILoadListener{
 	/*apk_list是传入listview中的全部数据
 	loadData为真就是数据没有改变
 	loadData为假数据就是刷新后的*/
-	private void showListView(ArrayList<ListViewItem> apk_list, boolean loadData) {
-		Log.v("TAG", String.valueOf(loadData));
+	private void setListViewAdapter(ArrayList<ListViewItem> apk_list, boolean loadData) {
 		if (loadData) {
-			Log.v("TAG", String.valueOf(apk_list));
-			apk_list = this.apk_list;
-			//apk_list = apk_list.isEmpty() ? getListViewData(true):apk_list;      //切换fragment时会重复加载该类，但是apk_list的值不变
 			listview = (LoadListView) view.findViewById(R.id.fragment1_listview);
 			listview.setInterface(this);
 			adapter = new ListViewAdapter(getActivity(), apk_list, getActivity());
 			listview.setAdapter(adapter);
 		} else {
-			Log.v("TAG", "datachange");
 			adapter.onDateChange(apk_list);
 		}
 	}
 	public void getListViewData(final boolean state){
 		Log.v("TAG", "getData()");
-		if(apk_list.isEmpty()){
-			StringRequest stringRequest = new StringRequest("http://192.168.1.106:3000/manager_books", 
+		if(apk_list.isEmpty() || state == false){
+			StringRequest stringRequest = new StringRequest("http://android-ruby.herokuapp.com/manager_books?start="+pageCount, 
 					new Response.Listener<String>() {  
 			            @Override  
 			            public void onResponse(String response) {  
@@ -82,8 +83,12 @@ public class OneFragment extends Fragment implements ILoadListener{
 								JSONObject stringToJson = new JSONObject(response);
 								if(stringToJson.get("state").toString().equals("success")){
 									setData(stringToJson.getJSONArray("book"));
-									showListView(apk_list, state);
-								}else{
+									if(state==false){                             //拖动屏幕加载的数据
+										setListViewAdapter(apk_list, false);
+										listview.loadComplete();
+									}else{
+										setListViewAdapter(apk_list, state);
+									}
 								}
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
@@ -101,7 +106,7 @@ public class OneFragment extends Fragment implements ILoadListener{
 			stringRequest.setRetryPolicy(policy);
 			signUpQueue.add(stringRequest);
 		}else{
-			showListView(this.apk_list, true);
+			setListViewAdapter(this.apk_list, true);
 		}
 	}
 	public void setData(JSONArray array) throws JSONException {
@@ -113,31 +118,21 @@ public class OneFragment extends Fragment implements ILoadListener{
 			entity.setPicture(array.getJSONObject(i).get("image_uri").toString());
 			entity.setReason("好好好");
 			apk_list.add(entity);
+			pageCount = apk_list.size();
 		}
 	}
-	private void getLoadData() {
-		for (int i = 0; i < 2; i++) {
-			ListViewItem entity = new ListViewItem();
-			entity.setTitle("android疯狂讲义");
-			entity.setAuthor("李刚");
-			entity.setInfo("计算机便携化是未来的发展趋势，而Android作为最受欢迎的手机、平板电脑操作之一，其发展的上升势头是势不可当的。而Android应用选择了");
-			entity.setReason("load data");
-			apk_list.add(entity);
-		}
-	}
+	Handler handler = new Handler();
 	@Override
 	public void onLoad() {
 		// TODO Auto-generated method stub
-		Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
-			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				getLoadData();
-				showListView(apk_list, false);
+				getListViewData(false);
+				//setListViewAdapter(apk_list, false);
 				listview.loadComplete();
 			}
-		},2000);
+		}, 2000);
 	}
 }

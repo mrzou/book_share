@@ -86,17 +86,6 @@ public class ListViewAdapter extends BaseAdapter {
 		holder.book_author.setText(entity.getAuthor());
 		holder.book_info.setText(entity.getInfo());
 		holder.recom_reson.setText(entity.getReason());
-		/*try {
-			URL picUrl = new URL("http://192.168.1.106:3000/"+entity.getPicture());
-			Bitmap pngBM = BitmapFactory.decodeStream(picUrl.openStream()); 
-			holder.image_uri.setImageBitmap(pngBM);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		setItemImage(holder.image_uri, entity.getPicture());
 		return convertView;
 	}

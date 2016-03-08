@@ -14,6 +14,13 @@
         android:layout_height="10dp"
         android:background="@drawable/line" />
 
+    <TextView
+        android:id="@+id/alert_net"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="当前没有网络!请检查设置"
+        android:background="#FFFF66"
+        android:gravity="center"/>
     <com.aqbook.activity.view.LoadListView
         android:id="@+id/fragment1_listview"
         android:layout_width="fill_parent"

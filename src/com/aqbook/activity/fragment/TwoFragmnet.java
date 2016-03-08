@@ -15,8 +15,6 @@ import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import cn.smssdk.SMSSDK;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,12 +34,14 @@ import com.aqbook.activity.entity.EditTextWatcher;
 import com.aqbook.activity.entity.PublicMethod;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -96,7 +96,7 @@ public class TwoFragmnet extends Fragment {
 			public void onClick(View v) {
 				SharedPreferences token = getActivity().getSharedPreferences("token", 0);
 				if(token.getString("token", "").equals("")){
-					PublicMethod.makeAlertDialog(getActivity(), null).show();
+					PublicMethod.makeAlertDialog(getActivity(), null, "还没登陆?").show();
 				}else{
 					Intent intent = new Intent();
 					intent.setClass(activity, MipcaActivityCapture.class);
@@ -280,7 +280,7 @@ public class TwoFragmnet extends Fragment {
 		return linearLayout;
 	}
 //	解析xml字符串
-	public ArrayList<String> xmlStringToDocument(String xmlString) throws IOException, ParserConfigurationException, SAXException {
+	@TargetApi(Build.VERSION_CODES.FROYO) public ArrayList<String> xmlStringToDocument(String xmlString) throws IOException, ParserConfigurationException, SAXException {
 		
 		ArrayList<String> newBookArray = new ArrayList<String>();
 		DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
