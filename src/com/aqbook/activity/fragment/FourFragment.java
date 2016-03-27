@@ -112,7 +112,7 @@ public class FourFragment extends Fragment implements OnClickListener{
 		JSONObject jsonObjectAll = new JSONObject(allMap);
 		if(PublicMethod.isNetworkConnected(getActivity())){
 			makeDialog();
-			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/users/sign_in", jsonObjectAll,  
+			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, PublicMethod.domainName + "/users/sign_in", jsonObjectAll,  
 				new Response.Listener<JSONObject>() {  
 					@Override  
 					public void onResponse(JSONObject response) {  

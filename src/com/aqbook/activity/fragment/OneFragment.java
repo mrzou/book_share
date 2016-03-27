@@ -75,7 +75,7 @@ public class OneFragment extends Fragment implements ILoadListener{
 	public void getListViewData(final boolean state){
 		Log.v("TAG", "getData()");
 		if(apk_list.isEmpty() || state == false){
-			StringRequest stringRequest = new StringRequest("http://android-ruby.herokuapp.com/manager_books?start="+pageCount, 
+			StringRequest stringRequest = new StringRequest(PublicMethod.domainName + "/manager_books?start="+pageCount, 
 					new Response.Listener<String>() {  
 			            @Override  
 			            public void onResponse(String response) {  

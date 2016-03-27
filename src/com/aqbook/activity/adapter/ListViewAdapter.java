@@ -91,7 +91,7 @@ public class ListViewAdapter extends BaseAdapter {
 	}
 	
 	public void setItemImage(final ImageView imageView, String pic_url){
-		ImageRequest imageRequest = new ImageRequest("http://192.168.1.106:3000"+pic_url, new Response.Listener<Bitmap>() {  
+		ImageRequest imageRequest = new ImageRequest(pic_url, new Response.Listener<Bitmap>() {  
             @Override  
             public void onResponse(Bitmap response) {  
                 imageView.setImageBitmap(response);  
@@ -99,6 +99,7 @@ public class ListViewAdapter extends BaseAdapter {
         },270, 360, Config.RGB_565, new Response.ErrorListener() {  
             @Override  
             public void onErrorResponse(VolleyError error) {  
+            	imageView.setImageResource(R.drawable.error); 
             }  
         });  
         int socketTimeout = 50000;//30 seconds - change to what you want
@@ -110,8 +111,8 @@ public class ListViewAdapter extends BaseAdapter {
 	public void setPicture(View view){
 		Typeface iconfont = Typeface.createFromAsset(context.getAssets(), "logup.ttf");
 		TextView iconBook = (TextView)view.findViewById(R.id.iconf_book);
-		TextView user_name = (TextView)view.findViewById(R.id.user_name);
 		iconBook.setTypeface(iconfont);
+		TextView user_name = (TextView)view.findViewById(R.id.user_name);
 		user_name.setText("15018633076");
 	}
 

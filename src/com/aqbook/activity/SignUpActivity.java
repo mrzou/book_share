@@ -22,6 +22,7 @@ import com.aqbook.R;
 import com.aqbook.activity.entity.CustomProgress;
 import com.aqbook.activity.entity.PublicMethod;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -55,8 +56,8 @@ public class SignUpActivity<signUpButton> extends Activity {
 	Button button;
 	EditText passwordConfirmEditText;
 	
-	private static String APPKEY = "806cb6d938b4";
-	private static String APPSECRET = "5c627357ef651ecc7657974e4a235101";
+	private static String APPKEY = "f62947cacc14";
+	private static String APPSECRET = "44dff7310068c35ed822f866ac946a5a";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +143,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 		JSONObject jsonObject = new JSONObject(phoneNumber); 
 		if(PublicMethod.isNetworkConnected(this)){
 			Log.v("TAG", "excute");
-			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/validate_messages/validatePhoneNumber", jsonObject,  
+			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,PublicMethod.domainName + "/validate_messages/validatePhoneNumber", jsonObject,  
 		        new Response.Listener<JSONObject>() {  
 		            @Override  
 		            public void onResponse(JSONObject response) {  
@@ -179,6 +180,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 			Toast.makeText(this, "网络没有连接", 1).show();
 		}
 	}
+	@SuppressLint("NewApi") 
 	public void click_to_back(View view){
 		this.onBackPressed();
 		MainActivity.setIndexPager(3);
@@ -289,7 +291,7 @@ public class SignUpActivity<signUpButton> extends Activity {
 		Map<String, Object> allMap = new HashMap<String, Object>();    
 		allMap.put("user", jsonObject);
 		JSONObject jsonObjectAll = new JSONObject(allMap); 
-		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,"http://192.168.1.106:3000/users.json", jsonObjectAll,  
+		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, PublicMethod.domainName + "/users.json", jsonObjectAll,  
 			new Response.Listener<JSONObject>() {  
 				@Override  
 				public void onResponse(JSONObject response) {  
